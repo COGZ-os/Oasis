@@ -1,3 +1,5 @@
+const db = require('../models/locationModels');
+
 const authController = {
 
     signUp(req, res, next) {
