@@ -38,6 +38,9 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.4",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.20",
