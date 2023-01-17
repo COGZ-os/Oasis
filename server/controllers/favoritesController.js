@@ -1,3 +1,5 @@
+const db = require('../models/locationModels');
+
 const favoritesController = {
 
     getFavorites(req, res, next) {

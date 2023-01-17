@@ -1,3 +1,5 @@
+const db = require('../models/locationModels');
+
 const locationsController = {
 
     getLocations(req, res, next) {
