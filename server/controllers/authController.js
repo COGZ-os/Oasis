@@ -1,11 +1,13 @@
 const authController = {
 
     signUp(req, res, next) {
-        req.locals.newUser = {'user': 0};
+        res.locals.newUser = {'user': 0};
+        next();
     },
 
     logIn(req, res, next) {
-        req.locals.newUser = 'success';
+        res.locals.status = 'success';
+        next();
     }
 
 }
