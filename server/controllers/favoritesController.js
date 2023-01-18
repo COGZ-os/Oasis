@@ -15,7 +15,7 @@ const favoritesController = {
                 {
                      where: {
                         id: {
-                            [Op.or]: favoriteIdInputs
+                            [Op.in]: favoriteIdInputs
                         }
                     }
                 }
