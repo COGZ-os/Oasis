@@ -1,10 +1,11 @@
-import ListContainer from "./ListContainer.js"
 import React from "react";
+import ListContainer from "./ListContainer.js"
+import MapContainer from "./MapContainer.js";
 
 const Dash = () => {
     return (
-        <div>
-            {/* <MapContainer/> */}
+        <div className="dashboard">
+            <MapContainer/>
             <ListContainer/>
         </div>
     )
