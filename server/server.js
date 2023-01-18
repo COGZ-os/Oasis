@@ -17,7 +17,7 @@ app.use('/locations', locationsRouter);
 app.use('/favorites', favoritesRouter);
 
 app.use('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+  return res.status(200).send(path.join(__dirname, '../client/index.html'));
 });
 
 // Handle all remaining endpoints that are not defined in the server/routers
