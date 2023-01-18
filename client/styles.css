@@ -2,3 +2,12 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
 }
+
+.myMap {
+  position: relative;
+}
+
+#map {
+  height: 40rem;
+  width: 100%;
+}

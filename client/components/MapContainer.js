@@ -6,8 +6,8 @@ import MAPS_API_KEY from "../../env_workaround.js"
 
 const MapContainer = () => {
   const [center, setCenter] = useState({
-    lat: 0,
-    lng: 0,
+    lat: 40.747760,
+    lng: -73.993360,
   });
   const [zoom, setZoom] = useState(4);
 
@@ -18,15 +18,12 @@ const MapContainer = () => {
       case Status.FAILURE:
         return <div>FAILED TO LOAD MAP</div>;
       case Status.SUCCESS:
-        return <MapComponent />;
+        return <MapComponent className="myMap"/>;
     }
   };
 
   return (
-    <div>
-    Hello
     <Wrapper apiKey={MAPS_API_KEY} render={render}/>
-    </div>
   )
 };
 
