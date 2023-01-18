@@ -50,6 +50,7 @@ const locationsController = {
     
     async createLocation(req, res, next) {
         console.log('creating location');
+        console.log(req.body);
         const {
             user_id,
             name,
@@ -116,6 +117,7 @@ const locationsController = {
 }
 
 const getLonLatFromAddress = async (address) => {
+    console.log(address);
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
     try {
         const response = await axios.get(url);
