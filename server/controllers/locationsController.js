@@ -59,7 +59,13 @@ const locationsController = {
         } = req.body;
         // '1600 Amphitheatre Parkway, Mountain View, CA'
         const streetAddress = address_street + ', ' + address_city + ', ' + address_state;
-        const latLonObj = await getLonLatFromAddress(streetAddress);
+        let latLonObj;
+        try {
+            latLonObj = await getLonLatFromAddress(streetAddress);
+        }
+        catch(err) {
+            console.log(err);
+        }
         const newLocation = {
             user_id,
             name,

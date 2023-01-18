@@ -25,7 +25,7 @@ const PG_URI = PGURI;
 
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize(PG_URI);
+const sequelize = new Sequelize(PG_URI, { dialect: 'postgres' });
 
 const User = sequelize.define('User', {
   id: {
