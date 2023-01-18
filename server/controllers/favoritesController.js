@@ -1,17 +1,21 @@
-const { Favorite, Location } = require('../models/locationModels');
-const locationsController = require('./locationsController');
+const { Favorite } = require('../models/locationModels');
+const { Op } = require('sequelize');
 
 const favoritesController = {
 
     async getFavorites(req, res, next) {
-        const { user_id } = req.params;
+        console.log("getFavorites")
+        const { user_id } = req.query;
+        console.log("user_id", user_id);
         try {
             const favoriteIds = await Favorite.findAll({ attributes: ['location_id'], where: { user_id }});
+            const favoriteIdInputs = favoriteIds.map(fav => fav.dataValues.location_id);
+            console.log("favoriteIds", favoriteIdInputs);
             const favoriteLocations = await Location.findAll(
                 {
                      where: {
                         id: {
-                            [Sequelize.Op.in]: favoriteIds
+                            [Op.or]: favoriteIdInputs
                         }
                     }
                 }

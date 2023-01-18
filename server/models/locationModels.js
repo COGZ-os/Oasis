@@ -25,7 +25,7 @@ const PG_URI = PGURI;
 
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize(PG_URI);
+const sequelize = new Sequelize(PG_URI, { dialect: 'postgres' });
 
 const User = sequelize.define('User', {
   id: {
@@ -111,11 +111,11 @@ const Location = sequelize.define('Location', {
     allowNull: false,
   },
   latitude: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
   longitude: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
   safe_yes_votes: {
