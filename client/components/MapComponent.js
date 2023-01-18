@@ -13,7 +13,18 @@ const MapComponent = (props) => {
     }
   }, [props.center, ref, map]);
 
-  return <div ref={ref} id="map" />
+  return (
+    <>
+      <div ref={ref} id="map" />
+      {React.Children.map(props.children, (child) => {
+      if (React.isValidElement(child)) {
+        // set the map prop on the child component
+        // @ts-ignore
+        return React.cloneElement(child, { map });
+      }
+    })}
+    </>
+  ) 
 }
 
 export default MapComponent;

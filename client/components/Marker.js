@@ -5,7 +5,7 @@ const Marker = (options) => {
 
   useEffect(() => {
     if (!marker) {
-      setMarker(new google.maps.Marker());
+      setMarker(new window.google.maps.Marker());
     }
 
     return () => {

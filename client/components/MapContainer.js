@@ -30,7 +30,6 @@ const MapContainer = (props) => {
             console.log('api response: ', response);
             return response.results[0].geometry.location
           })
-        // const location = response.data.results[0].geometry.location;
         return location;
     } catch (error) {
         console.error(error);
