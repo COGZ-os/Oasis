@@ -10,8 +10,9 @@ const ListContainer = (props) => {
     const toRender = [];
     console.log('received: ', receivedData)
     receivedData.forEach(location => {
-        
-        toRender.push(<ListItem 
+
+        toRender.push(<ListItem
+            id={location.id} 
             name={location.name}
             location_category={location.location_category}
             lgbtq_category={location.lgbtq_category}
@@ -24,7 +25,7 @@ const ListContainer = (props) => {
             description={location.description}/>)
     })
     return (
-        <div>
+        <div className="list_container">
             {toRender.length === 0 && <p>Search for an address or business name to see results</p>}
             {toRender}
         </div>
