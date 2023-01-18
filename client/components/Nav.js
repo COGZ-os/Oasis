@@ -7,6 +7,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
 import AddLocation from './AddLocation.js';
 import AuthWindow from './AuthWindow.js';
@@ -53,14 +57,36 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Nav = () => {
+const Nav = (props) => {
   // TODO: add conditional rendering of AddLocation and AuthWindow components tied to whether these state values are true - likely with a MUI component
   const [displayAuthWindow, toggleAuthWindow] = useState(false);
   const [displayAddLocation, toggleAddLocation] = useState(false);
 
+  const [searchCategory, setSearchCategory] = useState('address');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // let searchCategory = 'address';
+  // let searchQuery = '';
+
+  const handleTypeChange = (e) => {
+    setSearchCategory(e.target.value);
+  }
+
+  const handleSubmit = () => {
+    let route = `locations/?search_type=${searchCategory}&payload=${searchQuery}`
+    route = route.replaceAll(' ', '%20')
+    console.log('searchQuery: ', searchQuery)
+    console.log('route: ', route)
+    fetch(route)
+      .then(response => response.json())
+      .then(data => props.setReceivedData(data));
+  }
+
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: 'salmon'}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -78,18 +104,36 @@ const Nav = () => {
           >
             oh hey sis
           </Typography>
+          <FormControl style={{minWidth: 120, color: 'white'}}>
+            <InputLabel id="search-category-label">Search by...</InputLabel>
+            <Select
+              labelId="search-category-label"
+              id="search-category"
+              // value={'category'}
+              label="Search Category"
+              onChange={(e) => handleTypeChange(e)}
+            >
+              <MenuItem value={'address'}>Street Address</MenuItem>
+              <MenuItem value={'name'}>Business Name</MenuItem>
+            </Select>
+          </FormControl>
           <Search>
-            <SearchIconWrapper>
-            </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
+            <Button 
+              variant="text" 
+              sx={{color: 'white'}}
+              onClick={handleSubmit}>
+              Go
+            </Button>
           </Search>
-          <Button id="addLoc" variant="contained" onClick={() => toggleAddLocation(!displayAddLocation)}>
+          <Button sx={{ backgroundColor: '#20B2AA'}} id="addLoc" variant="contained" onClick={() => toggleAddLocation(!displayAddLocation)}>
             Add Location
           </Button>
-          <Button id="login" variant="contained" onClick={() => toggleAuthWindow(!displayAuthWindow)}>
+          <Button sx={{ backgroundColor: '#20B2AA'}} id="login" variant="contained" onClick={() => toggleAuthWindow(!displayAuthWindow)}>
             Sign up/Log in
           </Button>
         </Toolbar>

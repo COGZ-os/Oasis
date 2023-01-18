@@ -25,15 +25,15 @@ const Dash = (props) => {
             console.log('geolocation not available');
         }
         // Need to determine how to send default location with get request - header or query string?
-        fetch('/locations')
-            .then(response => response.json())
-            .then(response => props.setReceivedData(response));
+        // fetch('/locations')
+        //     .then(response => response.json())
+        //     .then(response => props.setReceivedData(response));
     }, [])
 
     return (
         <div className="dashboard">
             <MapContainer userLocation={userLocation}/>
-            <ListContainer/>
+            <ListContainer setReceivedData={props.setReceivedData}/>
         </div>
     )
 }

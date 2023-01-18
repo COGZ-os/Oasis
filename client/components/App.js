@@ -12,7 +12,7 @@ const App = () => {
   return (
     <DataContext.Provider value={receivedData}>
       <Nav setSearchData={setSearchData} setReceivedData={setReceivedData}/>
-      <Dash/>
+      <Dash setReceivedData={setReceivedData}/>
     </DataContext.Provider>
   )
 }
