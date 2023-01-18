@@ -4,31 +4,34 @@ const dotenv = require('dotenv');
 const { get } = require('../routes/authRouter');
 const { MAPS_API_KEY } = process.env;
 const apiKey = MAPS_API_KEY;
+// import fetch from "node-fetch";
+const http = require('http');
+
+const axios = require('axios');
 
 
 const locationsController = {
-
     async getLocations(req, res, next) {
-        const { search_type, lgbtq_category, location_category, name_pattern, address_pattern} = req.body;
+        const { search_type, payload } = req.query;
         let conditions;
         if (search_type === 'lgbtq_category') {
             conditions = {
-                lgbtq_category
+                lgbtq_category: payload
             }
         } else if (search_type === 'location_category') {
             conditions = {
-                location_category
+                location_category: payload
             }
         } else if (search_type === 'name') {
             conditions = {
                 name: {
-                    [Op.like]: `%${name_pattern}%`
+                    [Op.like]: `%${payload}%`
                   }
             }
         } else if (search_type === 'address') {
             conditions = {
                 address_street: {
-                    [Op.like]: `%${address_pattern}%`
+                    [Op.like]: `%${payload}%`
                   }
             }
         } else {
@@ -58,9 +61,16 @@ const locationsController = {
             address_zipcode,
             description,
         } = req.body;
-        // '1600 Amphitheatre Parkway, Mountain View, CA'
-        const streetAddress = address_street + ', ' + address_city + ', ' + address_state;
-        const latLonObj = await getLonLatFromAddress(streetAddress);
+        
+        let streetAddress = address_street + ', ' + address_city + ', ' + address_state;
+        streetAddress = streetAddress.replaceAll(' ', '%20')
+        let location;
+        try {
+            location = await getLonLatFromAddress(streetAddress);
+        }
+        catch(err) {
+            console.log(err);
+        }
         const newLocation = {
             user_id,
             name,
@@ -73,8 +83,8 @@ const locationsController = {
             description,
             safe_yes_votes: 0,
             safe_no_votes: 0,
-            latitude: latLonObj.lat,
-            longitude: latLonObj.lng
+            latitude: location ? location.lat : 0,
+            longitude: location ? location.lng : 0
         };
         try {
             const newLocationFromDB = await Location.create(newLocation);
@@ -94,7 +104,7 @@ const locationsController = {
             if (method === 'increment') {
                 voteResult = await location.increment(['safe_yes_votes'], { by: 1 });
             } else if (method === 'decrement') {
-                voteResult = await location.decrement(['safe_no_votes'], { by: 1 });
+                voteResult = await location.increment(['safe_no_votes'], { by: 1 });
             }
             res.locals.updatedLocation = {updatedLocation: voteResult};
             return next();
@@ -106,15 +116,26 @@ const locationsController = {
 }
 
 const getLonLatFromAddress = async (address) => {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
     try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const location = data.results[0].geometry.location;
+        const response = await axios.get(url);
+        const location = response.data.results[0].geometry.location;
         return location;
     } catch (error) {
         console.error(error);
     }
 }
+
+// {
+//     "user_id": 1,
+//     "name": "codesmith1",
+//     "location_category": "restroom1",
+//     "lgbtq_category": "safe",
+//     "address_street": "1600 Amphitheatre Parkway",
+//     "address_city": "Mountain View",
+//     "address_state": "CA",
+//     "address_zipcode": "90200",
+//     "description":"idk"
+// }
 
 module.exports = locationsController
