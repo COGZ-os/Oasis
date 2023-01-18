@@ -111,11 +111,11 @@ const Location = sequelize.define('Location', {
     allowNull: false,
   },
   latitude: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
   longitude: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.FLOAT,
     allowNull: false,
   },
   safe_yes_votes: {

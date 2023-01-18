@@ -9,12 +9,12 @@ router.get('/', favoritesController.getFavorites, (req, res) => {
 
 //add a favorite
 router.post('/', favoritesController.addFavorite, (req, res) => {
-    res.status(200).json(res.locals.status);
+    res.status(200).json(res.locals.newFavorite);
 });
 
 //remove a favorite
 router.delete('/', favoritesController.removeFavorite, (req, res) => {
-    res.status(200).json(res.locals.status);
+    res.status(200).json(res.locals.removedFavorite);
 });
 
 
