@@ -22,7 +22,7 @@ const ListContainer = (props) => {
     })
     return (
         <div>
-            Hello
+            {toRender.length === 0 && <p>Search for an address or business name to see results</p>}
             {toRender}
         </div>
     )

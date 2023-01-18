@@ -7,6 +7,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
 import AddLocation from './AddLocation.js';
 import AuthWindow from './AuthWindow.js';
@@ -58,6 +62,22 @@ const Nav = () => {
   const [displayAuthWindow, toggleAuthWindow] = useState(false);
   const [displayAddLocation, toggleAddLocation] = useState(false);
 
+  let searchCategory = 'address';
+  let searchQuery = '';
+
+  const handleTypeChange = (e) => {
+    searchCategory = e.target.value;
+  }
+
+  const handleSubmit = () => {
+    const route = '/locations' + searchCategory + '/' + searchQuery;
+    fetch(route)
+      .then(response => response.json())
+      .then(data => props.setReceivedData(data));
+  }
+
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -78,13 +98,31 @@ const Nav = () => {
           >
             oh hey sis
           </Typography>
+          <FormControl style={{minWidth: 120, color: 'white'}}>
+            <InputLabel id="search-category-label">Search by...</InputLabel>
+            <Select
+              labelId="search-category-label"
+              id="search-category"
+              // value={'category'}
+              label="Search Category"
+              onChange={(e) => handleTypeChange(e)}
+            >
+              <MenuItem value={'address'}>Street Address</MenuItem>
+              <MenuItem value={'name'}>Business Name</MenuItem>
+            </Select>
+          </FormControl>
           <Search>
-            <SearchIconWrapper>
-            </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => searchQuery = e.target.value}
             />
+            <Button 
+              variant="text" 
+              sx={{color: 'white'}}
+              onChange={handleSubmit}>
+              Go
+            </Button>
           </Search>
           <Button variant="contained" onClick={() => toggleAddLocation(!displayAddLocation)}>
             Add Location
