@@ -69,7 +69,7 @@ const Nav = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            oh hey sis
           </Typography>
           <Search>
             <SearchIconWrapper>

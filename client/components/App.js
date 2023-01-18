@@ -11,7 +11,6 @@ const App = () => {
 
   return (
     <DataContext.Provider value={receivedData}>
-      Oasis
       <Nav setSearchData={setSearchData} setReceivedData={setReceivedData}/>
       <Dash/>
     </DataContext.Provider>
