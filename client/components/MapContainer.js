@@ -9,7 +9,7 @@ const MapContainer = () => {
     lat: 40.747760,
     lng: -73.993360,
   });
-  const [zoom, setZoom] = useState(4);
+  const [zoom, setZoom] = useState(14);
 
   const render = (status) => {
     switch (status) {
@@ -18,7 +18,7 @@ const MapContainer = () => {
       case Status.FAILURE:
         return <div>FAILED TO LOAD MAP</div>;
       case Status.SUCCESS:
-        return <MapComponent className="myMap"/>;
+        return <MapComponent className="myMap" center={center} zoom={zoom}/>;
     }
   };
 
