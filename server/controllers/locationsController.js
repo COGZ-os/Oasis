@@ -7,9 +7,8 @@ const apiKey = MAPS_API_KEY;
 
 
 const locationsController = {
-
     async getLocations(req, res, next) {
-        const { search_type, lgbtq_category, location_category, name_pattern, address_pattern} = req.body;
+        const { search_type, lgbtq_category, location_category, name_pattern, address_pattern} = req.params;
         let conditions;
         if (search_type === 'lgbtq_category') {
             conditions = {
@@ -93,7 +92,7 @@ const locationsController = {
             if (method === 'increment') {
                 voteResult = await location.increment(['safe_yes_votes'], { by: 1 });
             } else if (method === 'decrement') {
-                voteResult = await location.decrement(['safe_no_votes'], { by: 1 });
+                voteResult = await location.increment(['safe_no_votes'], { by: 1 });
             }
             res.locals.updatedLocation = {updatedLocation: voteResult};
             return next();
