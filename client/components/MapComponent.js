@@ -8,7 +8,7 @@ const MapComponent = (props) => {
       center: props.center,
       zoom: props.zoom,
     });
-  }, []);
+  }, [props.center]);
 
   return <div ref={ref} id="map" />;
 }

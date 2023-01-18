@@ -1,9 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ListContainer from "./ListContainer.js"
 import MapContainer from "./MapContainer.js";
 
 const Dash = (props) => {
-    
+    const [userLocation, setUserLocation] = useState({
+        lat: 40.747760,
+        lng: -73.993360,
+        // lat: 40,
+        // lng: -73
+      })
     // on initial render, fetch safe locations based on either users current location if allowed or default location
     useEffect(() => {
         if ('geolocation' in navigator) {
@@ -11,6 +16,10 @@ const Dash = (props) => {
             navigator.geolocation.getCurrentPosition(function(position) {
                 console.log(position.coords.latitude);
                 console.log(position.coords.longitude);
+                setUserLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
             })
         } else {
             console.log('geolocation not available');
@@ -23,7 +32,7 @@ const Dash = (props) => {
 
     return (
         <div className="dashboard">
-            <MapContainer/>
+            <MapContainer userLocation={userLocation}/>
             <ListContainer/>
         </div>
     )

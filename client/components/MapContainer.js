@@ -4,11 +4,11 @@ import MapComponent from "./MapComponent.js";
 import MAPS_API_KEY from "../../env_workaround.js"
 
 
-const MapContainer = () => {
-  const [center, setCenter] = useState({
-    lat: 40.747760,
-    lng: -73.993360,
-  });
+const MapContainer = (props) => {
+  // const [center, setCenter] = useState({
+  //   lat: 40.747760,
+  //   lng: -73.993360,
+  // });
   const [zoom, setZoom] = useState(14);
 
   const render = (status) => {
@@ -18,7 +18,7 @@ const MapContainer = () => {
       case Status.FAILURE:
         return <div>FAILED TO LOAD MAP</div>;
       case Status.SUCCESS:
-        return <MapComponent className="myMap" center={center} zoom={zoom}/>;
+        return <MapComponent className="myMap" center={props.userLocation} zoom={zoom}/>;
     }
   };
 
