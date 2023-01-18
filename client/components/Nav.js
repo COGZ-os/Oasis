@@ -57,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Nav = () => {
+const Nav = (props) => {
   // TODO: add conditional rendering of AddLocation and AuthWindow components tied to whether these state values are true - likely with a MUI component
   const [displayAuthWindow, toggleAuthWindow] = useState(false);
   const [displayAddLocation, toggleAddLocation] = useState(false);
@@ -70,7 +70,7 @@ const Nav = () => {
   }
 
   const handleSubmit = () => {
-    const route = '/locations' + searchCategory + '/' + searchQuery;
+    const route = `locations/?searchType=${searchCategory}&payload="${searchQuery}"`
     fetch(route)
       .then(response => response.json())
       .then(data => props.setReceivedData(data));
@@ -80,7 +80,7 @@ const Nav = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: 'salmon'}}>
         <Toolbar>
           <IconButton
             size="large"
@@ -120,14 +120,14 @@ const Nav = () => {
             <Button 
               variant="text" 
               sx={{color: 'white'}}
-              onChange={handleSubmit}>
+              onClick={handleSubmit}>
               Go
             </Button>
           </Search>
-          <Button id="addLoc" variant="contained" onClick={() => toggleAddLocation(!displayAddLocation)}>
+          <Button sx={{ backgroundColor: '#20B2AA'}} id="addLoc" variant="contained" onClick={() => toggleAddLocation(!displayAddLocation)}>
             Add Location
           </Button>
-          <Button id="login" variant="contained" onClick={() => toggleAuthWindow(!displayAuthWindow)}>
+          <Button sx={{ backgroundColor: '#20B2AA'}} id="login" variant="contained" onClick={() => toggleAuthWindow(!displayAuthWindow)}>
             Sign up/Log in
           </Button>
         </Toolbar>
