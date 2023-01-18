@@ -7,12 +7,14 @@ const app = express();
 const { PORT } = process.env;
 
 app.use(express.json());
-// const authRouter = require('./routes/authRouter');
-// const dashboardRouter = require('./routes/dashboardRouter');
+const authRouter = require('./routes/authRouter');
+const locationsRouter = require('./routes/locationsRouter');
+const favoritesRouter = require('./routes/favoritesRouter');
 
 app.use(cookieParser());
-// app.use('/', authRouter);
-// app.use('/dashboard', dashboardRouter);
+app.use('/auth', authRouter);
+app.use('/locations', locationsRouter);
+app.use('/favorites', favoritesRouter);
 
 app.use('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
