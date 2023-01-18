@@ -1,11 +1,11 @@
-import { useContext } from "react";
-import React from "react";
+import React, { useContext } from "react";
 import ListItem from "./ListItem.js";
 import { DataContext } from "./App.js";
 
-const receivedData = useContext(DataContext);
 
 const ListContainer = (props) => {
+    const receivedData = useContext(DataContext);
+    
     const toRender = [];
     receivedData.forEach(location => {
         toRender.push(<ListItem 
