@@ -124,16 +124,16 @@ const Nav = () => {
               Go
             </Button>
           </Search>
-          <Button variant="contained" onClick={() => toggleAddLocation(!displayAddLocation)}>
+          <Button id="addLoc" variant="contained" onClick={() => toggleAddLocation(!displayAddLocation)}>
             Add Location
           </Button>
-          <Button variant="contained" onClick={() => toggleAuthWindow(!displayAuthWindow)}>
+          <Button id="login" variant="contained" onClick={() => toggleAuthWindow(!displayAuthWindow)}>
             Sign up/Log in
           </Button>
         </Toolbar>
       </AppBar>
-      {displayAuthWindow === true && <AuthWindow />}
-      {displayAddLocation === true && <AddLocation />}
+      {displayAuthWindow === true && <AuthWindow anchorEl={document.getElementById("login")} handleClose={() => toggleAuthWindow(!displayAuthWindow)}/>}
+      {displayAddLocation === true && <AddLocation anchorEl={document.getElementById("addLoc")} handleClose={() => toggleAddLocation(!displayAddLocation)}/>}
     </Box>
   );
 }
