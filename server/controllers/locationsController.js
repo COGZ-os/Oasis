@@ -46,6 +46,7 @@ const locationsController = {
     },
     
     async createLocation(req, res, next) {
+        console.log('creating location');
         const {
             user_id,
             name,
