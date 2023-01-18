@@ -9,9 +9,12 @@ const ListContainer = (props) => {
 
     const toRender = [];
     console.log('received: ', receivedData)
-    receivedData.forEach(location => {
+    for (let i = 0; i < receivedData.length; i++) {
+    // receivedData.forEach(location => {
+        const location = receivedData[i];
 
         toRender.push(<ListItem
+            index={i}
             id={location.id} 
             name={location.name}
             location_category={location.location_category}
@@ -22,8 +25,9 @@ const ListContainer = (props) => {
             address_zipcode={location.address_zipcode}
             safe_yes_votes={location.safe_yes_votes}
             safe_no_votes={location.safe_no_votes}
-            description={location.description}/>)
-    })
+            description={location.description}
+            setReceivedData={props.setReceivedData}/>)
+    }
     return (
         <div className="list_container">
             {toRender.length === 0 && <p>Search for an address or business name to see results</p>}

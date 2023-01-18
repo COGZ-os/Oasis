@@ -62,15 +62,21 @@ const Nav = (props) => {
   const [displayAuthWindow, toggleAuthWindow] = useState(false);
   const [displayAddLocation, toggleAddLocation] = useState(false);
 
-  let searchCategory = 'address';
-  let searchQuery = '';
+  const [searchCategory, setSearchCategory] = useState('address');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // let searchCategory = 'address';
+  // let searchQuery = '';
 
   const handleTypeChange = (e) => {
-    searchCategory = e.target.value;
+    setSearchCategory(e.target.value);
   }
 
   const handleSubmit = () => {
-    const route = `locations/?searchType=${searchCategory}&payload="${searchQuery}"`
+    let route = `locations/?search_type=${searchCategory}&payload=${searchQuery}`
+    route = route.replaceAll(' ', '%20')
+    console.log('searchQuery: ', searchQuery)
+    console.log('route: ', route)
     fetch(route)
       .then(response => response.json())
       .then(data => props.setReceivedData(data));
@@ -115,7 +121,7 @@ const Nav = (props) => {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
-              onChange={(e) => searchQuery = e.target.value}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
             <Button 
               variant="text" 

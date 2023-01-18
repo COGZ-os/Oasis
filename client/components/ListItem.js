@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Chip } from "@mui/material";
 
 const ListItem = (props) => {
+    const [votes, incrementVotes] = useState({
+        yes: props.safe_yes_votes,
+        no: props.safe_no_votes,
+    })
 
     const handleVote = (method, id) => {
+        const voteMethod = (method === 'increment') ? 'yes' : 'no';
+        const newVotes = {...votes};
+        newVotes[voteMethod]++;
+        incrementVotes(newVotes);
+
         const body = JSON.stringify({
             method,
             id
@@ -25,8 +34,8 @@ const ListItem = (props) => {
             Category: {props.location_category} <br/>
             Description: {props.description} <br/>
             LGBT+-focused?: {props.lgbtq_category} <br/>
-            <b>{props.safe_yes_votes}</b> people found this location <b>safe</b><br/>
-            <b>{props.safe_no_votes}</b> people found this location <b>unsafe</b> <br/>
+            <b>{votes.yes}</b> people found this location <b>safe</b><br/>
+            <b>{votes.no}</b> people found this location <b>unsafe</b> <br/>
             <br/>
             <em id="safety_query">Have you found this place to be safe?</em> <br/>
             <div className="chip_tray">
